@@ -1,0 +1,29 @@
+{
+  "name": "jokervden/kafka-logger",
+  "description": "Kafka logger package for Laravel",
+  "require": {
+    "php": "^8.2|^8.3",
+    "laravel/framework": "^10.0|^11.0",
+    "mateusjunges/laravel-kafka": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "JokerVDen\\KafkaLogger\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "JokerVDen\\KafkaLogger\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "JokerVDen\\KafkaLogger\\Providers\\KafkaLoggerServiceProvider"
+      ]
+    }
+  },
+  "require-dev": {
+    "orchestra/testbench": "^9.5"
+  }
+}
