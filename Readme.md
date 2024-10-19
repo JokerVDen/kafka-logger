@@ -21,7 +21,17 @@ message data.
 
 1. First, require the package in your Laravel project:
 
-   If you are using the local version:
+   Add to the `composer.json`:
+   ```json
+       "repositories": [
+           {
+               "type": "vcs",
+               "url": "https://github.com/JokerVDen/kafka-logger"
+           }
+       ]
+   ```
+
+   Execute:
 
    ```bash
    composer require jokervden/kafka-logger
