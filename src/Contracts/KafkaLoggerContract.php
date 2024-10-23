@@ -11,8 +11,6 @@ use JsonException;
 interface KafkaLoggerContract
 {
     /**
-     * Log into the kafka
-     *
      * @throws JsonException
      * @throws Exception
      */

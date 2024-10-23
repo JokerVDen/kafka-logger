@@ -34,7 +34,6 @@ class KafkaLoggerTest extends TestCase
             ['username' => 'johndoe'],
             'auth-service',
             123,
-            'req-001',
             'evt-001'
         );
 

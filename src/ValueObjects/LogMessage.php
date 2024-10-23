@@ -24,7 +24,6 @@ readonly class LogMessage
         string $source,
         ?int $userId = null,
         ?string $requestId = null,
-        ?string $eventId = null,
         ?Carbon $createdAt = null,
     ) {
         $this->eventType = $eventType;
@@ -32,17 +31,10 @@ readonly class LogMessage
         $this->userId = $userId;
         $this->source = $source;
         $this->requestId = $requestId ?: Uuid::uuid4()->toString();
-        $this->eventId = $eventId ?: Uuid::uuid4()->toString();
+        $this->eventId = Uuid::uuid4()->toString();
         $this->createdAt = $createdAt?->toISOString() ?: Carbon::now()->toISOString();
     }
 
-    /**
-     * Convert data into array
-     *
-     * @param string|object|array $data
-     *
-     * @return string[]
-     */
     protected function convertDataToArray(string|object|array $data): array
     {
         if (is_array($data)) {
@@ -60,11 +52,6 @@ readonly class LogMessage
         throw new InvalidArgumentException('Invalid data format. Expected array, object, or string.');
     }
 
-    /**
-     * Converts the properties to an array
-     *
-     * @return array
-     */
     public function toArray(): array
     {
         return [

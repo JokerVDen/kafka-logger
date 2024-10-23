@@ -23,7 +23,6 @@ class LogMessageTest extends TestCase
             'auth-service',
             123,
             'req-001',
-            'evt-001'
         );
 
         $this->assertEquals('user_logged_in', $message->eventType);
@@ -31,7 +30,6 @@ class LogMessageTest extends TestCase
         $this->assertEquals(123, $message->userId);
         $this->assertEquals('auth-service', $message->source);
         $this->assertEquals('req-001', $message->requestId);
-        $this->assertEquals('evt-001', $message->eventId);
         $this->assertNotNull($message->createdAt);
     }
 
