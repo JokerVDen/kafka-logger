@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace JokerVDen\KafkaLogger\Tests;
 
 use JokerVDen\KafkaLogger\Providers\KafkaLoggerServiceProvider;
-use Junges\Kafka\Message\Message;
-use Orchestra\Testbench\TestCase;
 use JokerVDen\KafkaLogger\Services\KafkaLogger;
+use JokerVDen\KafkaLogger\Tests\Enums\EventType;
+use JokerVDen\KafkaLogger\Tests\Enums\SourceType;
 use JokerVDen\KafkaLogger\ValueObjects\LogMessage;
 use Junges\Kafka\Facades\Kafka;
+use Junges\Kafka\Message\Message;
+use Orchestra\Testbench\TestCase;
 
 class KafkaLoggerTest extends TestCase
 {
@@ -30,11 +32,10 @@ class KafkaLoggerTest extends TestCase
         $logger = app(KafkaLogger::class);
 
         $messageDto = new LogMessage(
-            'user_logged_in',
+            EventType::USER_LOGGED_IN,
             ['username' => 'johndoe'],
-            'auth-service',
+            SourceType::AUTH_SERVICE,
             123,
-            'req-001',
             'evt-001'
         );
 

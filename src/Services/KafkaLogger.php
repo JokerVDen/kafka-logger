@@ -5,17 +5,14 @@ declare(strict_types=1);
 namespace JokerVDen\KafkaLogger\Services;
 
 use Exception;
+use JokerVDen\KafkaLogger\Contracts\KafkaLoggerContract;
 use JokerVDen\KafkaLogger\ValueObjects\LogMessage;
 use JsonException;
 use Junges\Kafka\Facades\Kafka;
 use Junges\Kafka\Message\Message;
-use JokerVDen\KafkaLogger\Contracts\KafkaLoggerContract;
 
 class KafkaLogger implements KafkaLoggerContract
 {
-    /**
-     * @var string
-     */
     protected string $topic;
 
     public function __construct()
@@ -24,8 +21,6 @@ class KafkaLogger implements KafkaLoggerContract
     }
 
     /**
-     * Log into the kafka
-     *
      * @throws JsonException
      * @throws Exception
      */
