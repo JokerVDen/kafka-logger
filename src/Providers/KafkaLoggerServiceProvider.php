@@ -10,9 +10,6 @@ use JokerVDen\KafkaLogger\Contracts\KafkaLoggerContract;
 
 class KafkaLoggerServiceProvider extends ServiceProvider
 {
-    /**
-     * @inheritDoc
-     */
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/../../config/kafka-logger.php', 'kafka-logger');
@@ -20,17 +17,5 @@ class KafkaLoggerServiceProvider extends ServiceProvider
         $this->app->singleton(KafkaLoggerContract::class, function () {
             return new KafkaLogger();
         });
-    }
-
-    /**
-     * Boot the package
-     *
-     * @return void
-     */
-    public function boot(): void
-    {
-        $this->publishes([
-            __DIR__ . '/../config/kafka-logger.php' => config_path('kafka-logger.php'),
-        ]);
     }
 }
