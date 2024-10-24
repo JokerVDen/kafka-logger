@@ -42,7 +42,7 @@ message data.
    php artisan vendor:publish --provider="JokerVDen\KafkaLogger\KafkaLoggerServiceProvider"
    ```
 
-This will create a configuration file config/kafka-logger.php where you can set the default Kafka topic.
+This will create a configuration file `config/kafka-logger.php` where you can set the default Kafka topic.
 
 ## Configuration
 
@@ -62,18 +62,39 @@ You can send log messages by using the KafkaLogger service. Here’s an example 
 
 ```php
 use Ramsey\Uuid\Uuid;
+use JokerVDen\KafkaLogger\Contracts\EventTypeContract;
+use JokerVDen\KafkaLogger\Contracts\SourceTypeContract;
 use JokerVDen\KafkaLogger\Services\KafkaLogger;
 use JokerVDen\KafkaLogger\ValueObjects\LogMessage;
+
+enum EventType: string implements EventTypeContract
+{
+    case USER_LOGGED_IN = 'user_logged_in';
+
+    public function value(): string
+    {
+        return $this->value;
+    }
+}
+
+enum SourceType: string implements SourceTypeContract
+{
+    case AUTH_SERVICE = 'auth_service';
+
+    public function value(): string
+    {
+        return $this->value;
+    }
+}
 
 $kafkaLogger = app(KafkaLogger::class);
 
 $message = new LogMessage(
-    eventType: 'user.login',
-    data: ['user_id' => 1, 'action' => 'login'],
-    source: 'auth-service',
-    userId: 1,
-    requestId: Uuid::uuid4(),
-    eventId: Uuid::uuid4(),
+   eventType: EventType::USER_LOGGED_IN,
+   data: ['some data' => 'asdfasdf'],
+   source: SourceType::AUTH_SERVICE,
+   userId: 1,
+   requestId: Uuid::uuid4(),
 );
 
 $kafkaLogger->log($message);
@@ -81,8 +102,8 @@ $kafkaLogger->log($message);
 
 #### Automatic UUID Generation
 
-The package simplifies the process of generating requestId and eventId using UUID v4. If you don’t pass the requestId or
-eventId when constructing the LogMessage, they will be generated automatically:
+The package simplifies the process of generating requestId using UUID v4. If you don’t pass the requestId 
+when constructing the LogMessage, they will be generated automatically:
 
 ```php
 use JokerVDen\KafkaLogger\Services\KafkaLogger;
@@ -91,10 +112,11 @@ use JokerVDen\KafkaLogger\ValueObjects\LogMessage;
 $kafkaLogger = app(KafkaLogger::class);
 
 $message = new LogMessage(
-    eventType: 'order.created',
-    data: ['order_id' => 1234, 'amount' => 150],
-    source: 'order-service',
-    userId: 42
+   eventType: EventType::USER_LOGGED_IN,
+   data: ['some data' => 'asdfasdf'],
+   source: SourceType::AUTH_SERVICE,
+   userId: 1,
+   userId: 42
 );
 
 $kafkaLogger->log($message);
